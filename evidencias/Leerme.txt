@@ -1,1 +1,28 @@
-Aqui agrego las evidencias de los consumos a los microservicios. ademas del yaml donde estan mis consumos. use Insomnia para mis consumos de las URL de las micros
+Aqui agrego las evidencias de los consumos a los microservicios. ademas del yaml donde estan mis consumos. use Insomnia para mis consumos de las URL de las micros.
+
+
+si los micros fallan en docker al ejecutar(lo cual me paso). hacer los siguientes comandos:
+
+1.- docker network create vidabien-net
+
+2.- docker run -d --name seguros --network vidabien-net -p 8081:8081 mso-es-consulta-seguros-v1
+
+3.- docker run -d --name validaciones --network vidabien-net -p 8082:8082 -e SEGURO_SERVICE_URL=http://seguros:8081 mso-ts-validaciones-v1
+
+
+con esto a de funcionar
+
+
+para exportar mis imagenes use esto:
+
+1.- docker images
+
+2.- docker save -o mso-es-consulta-seguros-v1.tar mso-es-consulta-seguros-v1
+
+3.- docker save -o mso-ts-validaciones-v1.tar mso-ts-validaciones-v1
+
+y para cargar mis micros en otro contenedor seria:
+
+1.- docker load -i mso-es-consulta-seguros-v1.tar
+
+2- docker load -i mso-ts-validaciones-v1.tar
